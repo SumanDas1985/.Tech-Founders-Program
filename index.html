@@ -1176,6 +1176,12 @@ function go() {
   // Store submission data for email
   window._submission = { first, email, startup, desired, code: ACCESS_CODE };
 
+  // Clear form so old details don't persist after modal is closed
+  ['fFirst','fLast','fEmail','fStartup','fDesired'].forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).style.borderColor = '';
+  });
+
   document.getElementById('overlay').classList.add('on');
   document.body.style.overflow = 'hidden';
   setTimeout(initScratch, 320);
