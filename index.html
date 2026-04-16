@@ -1125,9 +1125,12 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
       we think <strong>${display}</strong> deserves better — <strong>${slug}.tech</strong>, on us, for 10 years.`;
   }
 
-  if (email) document.getElementById('fEmail').value = email;
-  document.getElementById('fStartup').value = display;
-  document.getElementById('fDesired').value = slug;
+  // Only prefill form if not already submitted this session
+  if (!sessionStorage.getItem('submitted')) {
+    if (email) document.getElementById('fEmail').value = email;
+    document.getElementById('fStartup').value = display;
+    document.getElementById('fDesired').value = slug;
+  }
 })();
 
 /* ── SCROLL REVEAL ── */
@@ -1175,6 +1178,7 @@ function go() {
 
   // Store submission data for email
   window._submission = { first, email, startup, desired, code: ACCESS_CODE };
+  sessionStorage.setItem('submitted', '1');
 
   document.getElementById('overlay').classList.add('on');
   document.body.style.overflow = 'hidden';
@@ -1231,11 +1235,12 @@ function writeToSheet(data) {
 function closeModal() {
   document.getElementById('overlay').classList.remove('on');
   document.body.style.overflow = '';
-  // Clear form fields so next visitor starts fresh
+  // Clear form fields so they don't re-populate
   ['fFirst','fLast','fEmail','fStartup','fDesired'].forEach(id => {
     const el = document.getElementById(id);
     if (el) { el.value = ''; el.style.borderColor = ''; }
   });
+  // Keep submitted flag so URL params don't re-fill on scroll/interaction
 }
 
 /* ── SCRATCH FOIL ── */
