@@ -987,16 +987,16 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   <div class="frow">
     <div class="fg">
       <label class="fl" for="fFirst">first name</label>
-      <input class="fi" type="text" id="fFirst" placeholder="ada" autocomplete="given-name">
+      <input class="fi" type="text" id="fFirst" placeholder="ada" autocomplete="off">
     </div>
     <div class="fg">
       <label class="fl" for="fLast">last name</label>
-      <input class="fi" type="text" id="fLast" placeholder="lovelace" autocomplete="family-name">
+      <input class="fi" type="text" id="fLast" placeholder="lovelace" autocomplete="off">
     </div>
   </div>
   <div class="fg">
     <label class="fl" for="fEmail">email</label>
-    <input class="fi" type="email" id="fEmail" placeholder="you@yourstartup.com" autocomplete="email">
+    <input class="fi" type="email" id="fEmail" placeholder="you@yourstartup.com" autocomplete="off">
   </div>
   <div class="fg">
     <label class="fl" for="fStartup">startup name</label>
@@ -1235,12 +1235,19 @@ function writeToSheet(data) {
 function closeModal() {
   document.getElementById('overlay').classList.remove('on');
   document.body.style.overflow = '';
-  // Clear form fields so they don't re-populate
+  // Hard reset every field — value, border, and placeholder
   ['fFirst','fLast','fEmail','fStartup','fDesired'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) { el.value = ''; el.style.borderColor = ''; }
+    if (!el) return;
+    el.value = '';
+    el.defaultValue = '';
+    el.style.borderColor = '';
+    el.blur();
   });
-  // Keep submitted flag so URL params don't re-fill on scroll/interaction
+  // Reset post-reveal message for next use
+  const note = document.getElementById('postReveal');
+  if (note) { note.classList.remove('on'); note.innerHTML = ''; }
+  window._submission = null;
 }
 
 /* ── SCRATCH FOIL ── */
