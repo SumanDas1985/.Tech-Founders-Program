@@ -642,7 +642,8 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   /* Marquee cards */
   .mq-card { width: 220px; padding: 16px; }
   .mq-domain { font-size: 13px; }
-  .mq-stat { font-size: 9px; }
+  .mq-stat { font-size: 9px; min-height: 38px; -webkit-line-clamp: 3; }
+  .mq-card { height: 155px; }
 
   /* Marquee header H2 + lede */
   .marquee-h2 { font-size: clamp(24px,7vw,36px); }
@@ -815,9 +816,9 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   100% { transform: translateX(0); }
 }
 
-.marquee-row.to-left  { animation: scrollL 90s linear infinite; }
-.marquee-row.to-right { animation: scrollR 90s linear infinite; }
-.marquee-row.to-left-slow { animation: scrollL 90s linear infinite; }
+.marquee-row.to-left  { animation: scrollL 77s linear infinite; }
+.marquee-row.to-right { animation: scrollR 77s linear infinite; }
+.marquee-row.to-left-slow { animation: scrollL 77s linear infinite; }
 
 /* pause on hover */
 .marquee-rows:hover .marquee-row { animation-play-state: paused; }
@@ -830,6 +831,7 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   border-radius: 8px;
   padding: 18px 20px;
   width: 280px;
+  height: 170px;
   display: flex; flex-direction: column; gap: 7px;
   position: relative; overflow: hidden;
   transition: border-color .2s;
@@ -878,6 +880,11 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   color: rgba(189,206,180,.7); line-height: 1.5;
   letter-spacing: .02em; margin-top: auto;
   padding-top: 9px; border-top: 1px solid rgba(255,255,255,.06);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 45px;
 }
 
 .proof-pull {
@@ -1068,61 +1075,61 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
   /* ── DATA ── */
   // ROW 1 — YC-backed companies (19 verified, all primary .tech)
   const ROW1 = [
-    { domain:'daivin',      tld:'.tech', company:'DAIVIN',              sector:'Defence / Aerospace',       badge:'YC W26', stat:'Your batchmate — tankless dive gear for sea, land and space. Chose .tech from day one.' },
-    { domain:'pollinate',   tld:'.tech', company:'Pollinate',           sector:'Supply Chain AI',            badge:'YC W26', stat:'Your batchmate — AI agents for supply chain. Chose .tech as primary from day one.' },
-    { domain:'voygr',       tld:'.tech', company:'VOYGR',               sector:'Geospatial / Location',      badge:'YC W26', stat:'Your batchmate — real-world place intelligence for AI apps and agents.' },
-    { domain:'turso',       tld:'.tech', company:'Turso',               sector:'Open-Source Database',       badge:'YC W22', stat:'Raised $8.7M seed; libSQL fork with massive developer community; trusted by tens of thousands of engineers.' },
-    { domain:'escape',      tld:'.tech', company:'Escape',              sector:'Offensive Security / AI',    badge:'YC W23', stat:'Raised $18M Series A; trusted by 2,000+ security teams; AI-powered offensive security platform.' },
-    { domain:'cheers',      tld:'.tech', company:'Cheers',              sector:'AI / Local Business',        badge:'YC S24', stat:'Literally says Backed by Y Combinator on homepage. 115% growth in 40 days, deployed across Vivint\'s national network.' },
-    { domain:'aisell',      tld:'.tech', company:'aiSell',              sector:'AI POS / SMB FinTech',       badge:'YC S24', stat:'AI-powered point-of-sale for small businesses \u2014 active primary .tech in fintech.' },
-    { domain:'roundabout',  tld:'.tech', company:'Roundabout',          sector:'Smart City / AI Infra',      badge:'YC F24', stat:'Ex-Waymo and ex-Zoox engineers \u2014 live street deployment in San Anselmo, CA with city contracts.' },
-    { domain:'alice',       tld:'.tech', company:'Alice',               sector:'EdTech / AI Learning',       badge:'YC W25', stat:'50,000+ students globally; $20k MRR during YC; 10% week-over-week growth.' },
-    { domain:'orbitalops',  tld:'.tech', company:'Orbital Operations',  sector:'Space / Defence',            badge:'YC W25', stat:'High-thrust space vehicles for satellite defence \u2014 same batch as Instinct.' },
-    { domain:'propolis',    tld:'.tech', company:'Propolis',            sector:'QA Automation / Dev Tools',  badge:'YC X25', stat:'AI QA agents with usage-based pricing \u2014 active primary .tech for a developer tool.' },
-    { domain:'brickanta',   tld:'.tech', company:'Brickanta',           sector:'Agentic AI / Construction',  badge:'YC F25', stat:'Agentic AI for construction \u2014 chose .tech as primary domain.' },
-    { domain:'augmental',   tld:'.tech', company:'Augmental',           sector:'Hardware / Input Devices',   badge:'YC-backed', stat:'Mouth-based computer input device \u2014 active primary .tech for a hardware product.' },
-    { domain:'seaflight',   tld:'.tech', company:'Seaflight Technologies', sector:'Deep Tech / Air Cargo',   badge:'YC-backed', stat:'Air cargo drones \u2014 active primary .tech for a deep-tech hardware company.' },
-    { domain:'railroad',    tld:'.tech', company:'Railroad',            sector:'AI Agent Safety / Dev Infra', badge:'YC-backed', stat:'AI agent safety for production \u2014 active primary .tech for developer infrastructure.' },
-    { domain:'flowsignal',  tld:'.tech', company:'Flowsignal',          sector:'Enterprise AI / CTO Tools',  badge:'YC-backed', stat:'AI chief of staff for CTOs \u2014 active primary .tech for a B2B enterprise product.' },
-    { domain:'preflite',    tld:'.tech', company:'Preflite',            sector:'Idea Validation SaaS',       badge:'YC-backed', stat:'Idea validation SaaS scanning Reddit, HN and Indie Hackers \u2014 active primary .tech.' },
-    { domain:'tailor',      tld:'.tech', company:'Tailor',              sector:'Headless ERP / Enterprise',  badge:'YC-backed', stat:'Headless ERP platform \u2014 one of the highest-traffic YC companies on .tech globally.' },
-    { domain:'numi',        tld:'.tech', company:'NUMI',                sector:'B2B Design Services',        badge:'YC-backed', stat:'On-demand design department for startups \u2014 active primary .tech with significant traffic.' },
+    { domain:'daivin',      tld:'.tech', company:'DAIVIN',              sector:'Defence / Aerospace',       badge:'YC W26', stat:'Tankless dive gear for sea, land and space. Defence-grade hardware from the W26 batch.' },
+    { domain:'pollinate',   tld:'.tech', company:'Pollinate',           sector:'Supply Chain AI',            badge:'YC W26', stat:'AI agents that automate supply chain operations end-to-end. YC W26.' },
+    { domain:'voygr',       tld:'.tech', company:'VOYGR',               sector:'Geospatial / Location',      badge:'YC W26', stat:'Real-world place intelligence powering AI apps and location-aware agents.' },
+    { domain:'turso',       tld:'.tech', company:'Turso',               sector:'Open-Source Database',       badge:'YC W22', stat:'Open-source libSQL fork. Raised $8.7M seed. Trusted by tens of thousands of engineers globally.' },
+    { domain:'escape',      tld:'.tech', company:'Escape',              sector:'Offensive Security / AI',    badge:'YC W23', stat:'AI-powered offensive security platform. Raised $18M Series A. Trusted by 2,000+ security teams.' },
+    { domain:'cheers',      tld:'.tech', company:'Cheers',              sector:'AI / Local Business',        badge:'YC S24', stat:'AI for local business growth. 115% revenue growth in 40 days. Deployed across national franchise networks.' },
+    { domain:'aisell',      tld:'.tech', company:'aiSell',              sector:'AI POS / SMB FinTech',       badge:'YC S24', stat:'AI point-of-sale for small businesses. Active primary .tech in the SMB fintech space.' },
+    { domain:'roundabout',  tld:'.tech', company:'Roundabout',          sector:'Smart City / AI Infra',      badge:'YC F24', stat:'Smart city AI infrastructure. Ex-Waymo and ex-Zoox engineers. Live deployment with city contracts.' },
+    { domain:'alice',       tld:'.tech', company:'Alice',               sector:'EdTech / AI Learning',       badge:'YC W25', stat:'AI learning platform. 50,000+ students globally. $20k MRR during YC. 10% week-over-week growth.' },
+    { domain:'orbitalops',  tld:'.tech', company:'Orbital Operations',  sector:'Space / Defence',            badge:'YC W25', stat:'High-thrust space vehicles for satellite defence missions. W25 batch.' },
+    { domain:'propolis',    tld:'.tech', company:'Propolis',            sector:'QA Automation / Dev Tools',  badge:'YC X25', stat:'AI QA agents with usage-based pricing. Built for developer and QA teams.' },
+    { domain:'brickanta',   tld:'.tech', company:'Brickanta',           sector:'Agentic AI / Construction',  badge:'YC F25', stat:'Agentic AI automating construction workflows. YC F25 batch.' },
+    { domain:'augmental',   tld:'.tech', company:'Augmental',           sector:'Hardware / Input Devices',   badge:'YC-backed', stat:'Mouth-based computer input device enabling hands-free computing for accessibility and pro users.' },
+    { domain:'seaflight',   tld:'.tech', company:'Seaflight Technologies', sector:'Deep Tech / Air Cargo',   badge:'YC-backed', stat:'Air cargo drones for last-mile and regional logistics. Deep-tech hardware startup.' },
+    { domain:'railroad',    tld:'.tech', company:'Railroad',            sector:'AI Agent Safety / Dev Infra', badge:'YC-backed', stat:'AI agent safety infrastructure for production deployments and developer teams.' },
+    { domain:'flowsignal',  tld:'.tech', company:'Flowsignal',          sector:'Enterprise AI / CTO Tools',  badge:'YC-backed', stat:'AI chief of staff for engineering leaders. B2B SaaS built for CTOs and VPs of Engineering.' },
+    { domain:'preflite',    tld:'.tech', company:'Preflite',            sector:'Idea Validation SaaS',       badge:'YC-backed', stat:'Idea validation SaaS. Scans Reddit, HN and Indie Hackers to stress-test startup ideas before building.' },
+    { domain:'tailor',      tld:'.tech', company:'Tailor',              sector:'Headless ERP / Enterprise',  badge:'YC-backed', stat:'Headless ERP platform for enterprise. One of the highest-traffic YC companies on .tech globally.' },
+    { domain:'numi',        tld:'.tech', company:'NUMI',                sector:'B2B Design Services',        badge:'YC-backed', stat:'On-demand design department for startups. Subscription-based creative team for early-stage companies.' },
   ];
 
   // ROW 2 — Mega-funded & global brands
   const ROW2 = [
-    { domain:'nothing',     tld:'.tech', company:'Nothing Technology',  sector:'Consumer Electronics',      signal:'$450M raised',      stat:'Co-founded by Carl Pei (OnePlus); raised $450M from GV (Google Ventures); Phone (2) sold in 40+ countries \u2014 a $450M company chose nothing.tech as global primary.' },
-    { domain:'hex',         tld:'.tech', company:'Hex',                 sector:'Data Analytics / BI',       signal:'$172M raised',       stat:'Raised $172M total ($70M Series C led by Avra, with a16z, Sequoia, Snowflake); AI-powered unified workspace for data science; 241 employees.' },
-    { domain:'neon',        tld:'.tech', company:'Neon (Databricks)',   sector:'Developer Infrastructure',  signal:'~$1B exit',  stat:'Raised $130M+; acquired by Databricks for ~$1B (May 2025); 40,000+ databases provisioned daily; 80% deployed by AI agents.' },
-    { domain:'ces',         tld:'.tech', company:'CES',                 sector:'Global Tech Event',         signal:'80yr institution',         stat:'The world\'s largest consumer tech show \u2014 moved from cesweb.org to ces.tech. An 80-year-old institution chose .tech.' },
-    { domain:'aurora',      tld:'.tech', company:'Aurora Innovation',   sector:'Self-Driving / Deep Tech',  signal:'$600M raised',  stat:'Raised $600M+ (Amazon, T. Rowe Price, Sequoia); self-driving truck platform \u2014 a highly funded deep-tech company chose aurora.tech.' },
-    { domain:'1x',          tld:'.tech', company:'1X Technologies',     sector:'Humanoid Robotics',         signal:'OpenAI-backed',         stat:'Backed by OpenAI; building NEO humanoid robots for home and commercial use \u2014 chose 1x.tech as primary domain.' },
-    { domain:'mosaic',      tld:'.tech', company:'Mosaic',              sector:'Financial Planning / FP&A', signal:'$29M raised', stat:'CEO: We landed on .tech because we\'re a technology company, first and foremost. $29M raised, CFO-focused SaaS.' },
-    { domain:'shadow',      tld:'.tech', company:'Shadow',              sector:'Cloud Computing / GPU',     signal:'GPU cloud leader',     stat:'CEO: Shadow is fundamentally a high-tech company. .tech reflects this origin. Cloud PC and GPU cloud service.' },
-    { domain:'insight',     tld:'.tech', company:'Intel IoT Blog',      sector:'Enterprise Technology',     signal:'Intel — $54B rev',     stat:'Intel Corporation \u2014 $54B revenue \u2014 uses insight.tech for its IoT blog. When Intel runs a publication on .tech, it says everything about the TLD\'s credibility.' },
-    { domain:'sixt',        tld:'.tech', company:'Sixt SE',             sector:'Global Mobility / Tech',    signal:'€4B+ revenue',    stat:'Frankfurt-listed since 1986; \u20ac4B+ revenue in 2024 (third consecutive record year) \u2014 engineering identity on sixt.tech.' },
-    { domain:'airbnb',      tld:'.tech', company:'Airbnb',              sector:'Global Tech Brand',         signal:'$70B market cap',         stat:'NASDAQ: ABNB, ~$70B market cap \u2014 engineering blog on airbnb.tech alongside airbnb.com.' },
-    { domain:'waves',       tld:'.tech', company:'Waves',               sector:'Audio Technology',          signal:'30yr institution',          stat:'Industry-standard audio plugins used by Grammy-winning engineers, major studios and broadcast networks worldwide \u2014 30-year-old company chose waves.tech.' },
-    { domain:'socket',      tld:'.tech', company:'Socket',              sector:'Blockchain / Web3 Infra',   signal:'Coinbase Ventures',   stat:'Cross-chain protocol connecting 20+ blockchains; backed by Coinbase Ventures, Framework Ventures, Lightspeed.' },
-    { domain:'qdrant',      tld:'.tech', company:'Qdrant',              sector:'AI Infrastructure / Vector DB', signal:'$87.8M raised', stat:'Raised $87.8M (Series B, Bosch Ventures & Spark Capital); used by Tripadvisor, HubSpot and Bosch; 250M+ downloads, 29K GitHub stars.' },
-    { domain:'hypershell',  tld:'.tech', company:'Hypershell',          sector:'Robotics / Exoskeleton',    signal:'$70M raised',    stat:'Raised $70M (~$400M valuation); 15,000+ units to 70+ countries; CES 2025 Best of Innovation Award; signed by Jensen Huang.' },
-    { domain:'automata',    tld:'.tech', company:'Automata Technologies', sector:'Lab Automation',          signal:'$45M Series C',          stat:'Raised $45M Series C (Jan 2026); Danaher strategic investor; customers: AstraZeneca, NHS Royal Marsden Trust, Francis Crick Institute.' },
-    { domain:'booster',     tld:'.tech', company:'Booster Robotics',    sector:'Humanoid Robotics',         signal:'$27.9M Series A',         stat:'Raised $27.9M Series A; won IEEE-RAS Humanoids 2024; only humanoid at NVIDIA Spring Reception where Jensen Huang signed it.' },
-    { domain:'netgain',     tld:'.tech', company:'Netgain',             sector:'Accounting Automation',     signal:'$35M raised',     stat:'Raised $35M from Summit Partners; $15M ARR; 1,600+ customers; 400% new logo growth in 24 months.' },
+    { domain:'nothing',     tld:'.tech', company:'Nothing Technology',  sector:'Consumer Electronics',      signal:'$450M raised',      stat:'Consumer electronics brand. Raised $450M from GV. Phone (2) sold in 40+ countries worldwide.' },
+    { domain:'hex',         tld:'.tech', company:'Hex',                 sector:'Data Analytics / BI',       signal:'$172M raised',       stat:'AI-powered unified workspace for data science. Raised $172M. Backed by a16z, Sequoia and Snowflake.' },
+    { domain:'neon',        tld:'.tech', company:'Neon (Databricks)',   sector:'Developer Infrastructure',  signal:'~$1B exit',  stat:'Serverless Postgres for developers. Acquired by Databricks for ~$1B. 40,000+ databases provisioned daily.' },
+    { domain:'ces',         tld:'.tech', company:'CES',                 sector:'Global Tech Event',         signal:'80yr institution',         stat:'The world’s largest consumer tech show. 80-year institution. Moved from cesweb.org to ces.tech.' },
+    { domain:'aurora',      tld:'.tech', company:'Aurora Innovation',   sector:'Self-Driving / Deep Tech',  signal:'$600M raised',  stat:'Self-driving truck platform. Raised $600M+ from Amazon, T. Rowe Price and Sequoia.' },
+    { domain:'1x',          tld:'.tech', company:'1X Technologies',     sector:'Humanoid Robotics',         signal:'OpenAI-backed',         stat:'Humanoid robotics building NEO for home and commercial use. Backed by OpenAI.' },
+    { domain:'mosaic',      tld:'.tech', company:'Mosaic',              sector:'Financial Planning / FP&A', signal:'$29M raised', stat:'Financial planning SaaS for CFOs and finance teams. Raised $29M. High-growth company customer base.' },
+    { domain:'shadow',      tld:'.tech', company:'Shadow',              sector:'Cloud Computing / GPU',     signal:'GPU cloud leader',     stat:'Cloud PC and GPU cloud service. Enables high-performance computing streamed to any device.' },
+    { domain:'insight',     tld:'.tech', company:'Intel IoT Blog',      sector:'Enterprise Technology',     signal:'Intel — $54B rev',     stat:'Intel IoT and enterprise technology publication. Operated by Intel, a $54B revenue company.' },
+    { domain:'sixt',        tld:'.tech', company:'Sixt SE',             sector:'Global Mobility / Tech',    signal:'€4B+ revenue',    stat:'Global car rental and mobility platform. Frankfurt-listed since 1986. €4B+ revenue in 2024.' },
+    { domain:'airbnb',      tld:'.tech', company:'Airbnb',              sector:'Global Tech Brand',         signal:'$70B market cap',         stat:'Global home-sharing platform. NASDAQ: ABNB. ~$70B market cap. Engineering blog on airbnb.tech.' },
+    { domain:'waves',       tld:'.tech', company:'Waves',               sector:'Audio Technology',          signal:'30yr institution',          stat:'Industry-standard audio plugins. Used by Grammy-winning engineers and major broadcast networks worldwide.' },
+    { domain:'socket',      tld:'.tech', company:'Socket',              sector:'Blockchain / Web3 Infra',   signal:'Coinbase Ventures',   stat:'Cross-chain protocol connecting 20+ blockchains. Backed by Coinbase Ventures and Lightspeed.' },
+    { domain:'qdrant',      tld:'.tech', company:'Qdrant',              sector:'AI Infrastructure / Vector DB', signal:'$87.8M raised', stat:'Vector database for AI applications. Raised $87.8M. Used by Tripadvisor, HubSpot and Bosch.' },
+    { domain:'hypershell',  tld:'.tech', company:'Hypershell',          sector:'Robotics / Exoskeleton',    signal:'$70M raised',    stat:'Robotic exoskeleton for industrial and military use. Raised $70M. 15,000+ units in 70+ countries.' },
+    { domain:'automata',    tld:'.tech', company:'Automata Technologies', sector:'Lab Automation',          signal:'$45M Series C',          stat:'Lab automation robotics. Raised $45M Series C. Customers include AstraZeneca and the Francis Crick Institute.' },
+    { domain:'booster',     tld:'.tech', company:'Booster Robotics',    sector:'Humanoid Robotics',         signal:'$27.9M Series A',         stat:'Humanoid robotics for industrial environments. Raised $27.9M Series A. Won IEEE-RAS Humanoids 2024.' },
+    { domain:'netgain',     tld:'.tech', company:'Netgain',             sector:'Accounting Automation',     signal:'$35M raised',     stat:'Accounting automation for mid-market companies. Raised $35M. $15M ARR. 1,600+ customers.' },
   ];
 
-  // ROW 3 — High-signal sector leaders
+  // ROW 3 — Sector specialists (all unique from ROW1 and ROW2)
   const ROW3 = [
-    { domain:'hypershell',  tld:'.tech', company:'Hypershell',              sector:'Robotics / Exoskeleton',     stat:'Raised $70M (~$400M valuation); 15,000+ units to 70+ countries; CES 2025 Best of Innovation; signed by Jensen Huang.' },
-    { domain:'automata',    tld:'.tech', company:'Automata Technologies',   sector:'Lab Automation',             stat:'Raised $45M Series C (Jan 2026); Danaher strategic investor; customers: AstraZeneca, NHS Royal Marsden Trust, Francis Crick Institute.' },
-    { domain:'booster',     tld:'.tech', company:'Booster Robotics',        sector:'Humanoid Robotics',          stat:'Raised $27.9M Series A; won IEEE-RAS Humanoids 2024; only humanoid at NVIDIA Spring Reception where Jensen Huang signed it.' },
-    { domain:'netgain',     tld:'.tech', company:'Netgain',                 sector:'Accounting Automation',      stat:'Raised $35M from Summit Partners; $15M ARR; 1,600+ customers; 400% new logo growth in 24 months.' },
-    { domain:'socket',      tld:'.tech', company:'Socket',                  sector:'Blockchain / Web3 Infra',    stat:'Cross-chain protocol connecting 20+ blockchains; backed by Coinbase Ventures, Framework Ventures, Lightspeed.' },
-    { domain:'qdrant',      tld:'.tech', company:'Qdrant',                  sector:'AI Infrastructure / Vector DB', stat:'Raised $87.8M (Series B, Bosch Ventures & Spark Capital); used by Tripadvisor, HubSpot and Bosch; 250M+ downloads, 29K GitHub stars.' },
-    { domain:'waves',       tld:'.tech', company:'Waves',                   sector:'Audio Technology',           stat:'Industry-standard audio plugins used by Grammy-winning engineers, major studios and broadcast networks worldwide — 30-year-old company chose waves.tech.' },
-    { domain:'airbnb',      tld:'.tech', company:'Airbnb',                  sector:'Global Tech Brand',          stat:'NASDAQ: ABNB, ~$70B market cap — engineering blog on airbnb.tech alongside airbnb.com.' },
-    { domain:'sixt',        tld:'.tech', company:'Sixt SE',                 sector:'Global Mobility / Tech',     stat:'Frankfurt-listed since 1986; €4B+ revenue in 2024 (third consecutive record year) — engineering identity on sixt.tech.' },
-    { domain:'insight',     tld:'.tech', company:'Intel IoT Blog',          sector:'Enterprise Technology',      stat:'Intel Corporation — $54B revenue — uses insight.tech for its IoT blog. When Intel runs a publication on .tech, it says everything about the TLD\'s credibility.' },
+    { domain:'accuhealth',  tld:'.tech', company:'Accuhealth',          sector:'Remote Patient Monitoring', stat:'Series A funded. 200+ clinical partners. Live deployments across US hospital networks.' },
+    { domain:'zigram',      tld:'.tech', company:'ZIGRAM',              sector:'RegTech / AML Compliance',  stat:'3,330+ global watchlists monitored. Tier-1 sponsor at Fintech Summit Saudi Arabia 2025. Cited in FATF 2024-25 Annual Report.' },
+    { domain:'june',        tld:'.tech', company:'June',                sector:'Legal Workflow Automation', stat:'Centralised legal workflow for global law firms and in-house legal teams across Europe and North America.' },
+    { domain:'tawasul',     tld:'.tech', company:'Tawasul',             sector:'Smart Mobility / Fleet',    stat:'Fleet management and AI telematics deployed across Saudi Arabia for government and enterprise clients.' },
+    { domain:'sharry',      tld:'.tech', company:'Sharry',              sector:'PropTech / Workplace',      stat:'Enterprise workplace experience platform. Integrated with 20+ access control systems. Trusted by commercial real estate leaders.' },
+    { domain:'gotrust',     tld:'.tech', company:'GoTrust',             sector:'Privacy & AI Governance',   stat:'B2B consent management, vendor risk and AI governance platform. Fully live on .tech.' },
+    { domain:'fairmat',     tld:'.tech', company:'Fairmat',             sector:'Aerospace / Sustainable Materials', stat:'B Corp certified. Processes carbon fibre from Airbus and wind turbine manufacturers. Featured in Le Monde and Les Echos.' },
+    { domain:'geopard',     tld:'.tech', company:'GeoPard Agriculture', sector:'AgriTech / Precision Ag',   stat:'Precision agriculture software helping agronomists optimise field decisions using satellite and sensor data.' },
+    { domain:'kando',       tld:'.tech', company:'Kando',               sector:'VC / PE Investment Intel',  stat:'AI-powered investor matching database. Used by founders and investors to surface relevant VC and PE firms globally.' },
+    { domain:'turn2law',    tld:'.tech', company:'Turn2Law',            sector:'Legal Tech Marketplace',    stat:'On-demand lawyer marketplace. Instant matching with qualified lawyers for personal and business legal needs.' },
   ];
 
   function makeCard(d) {
@@ -1161,7 +1168,7 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
     get your access code <span class="hl">instantly.</span>
   </h2>
   <p class="form-note">
-    submit your details. if confirmed, you’ll receive a private access code to claim your .tech domain — free for 10 years. reviewed personally. no spam.
+    submit your details. if confirmed, you’ll receive a private access code to claim your .tech domain. reviewed personally. no spam.
   </p>
 
   <div class="fg">
@@ -1218,8 +1225,7 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
       <div class="inv-msg" id="invMsg">
         we believe what you're building deserves a domain that does it justice.
         we'd like to offer you <strong id="invDomainRef">yourcompany.tech</strong> —
-        on us, for 10 years.
-      </div>
+        </div>
 
       <!-- browser bar domain display -->
       <div class="inv-offer">
@@ -1253,7 +1259,7 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
       ">tap to reveal</button>
 
       <div class="post-reveal" id="postReveal">
-        use <span style="font-family:var(--f-mono);color:var(--neura);letter-spacing:.1em">FOUNDERSTECH</span> at <a href="https://get.tech" target="_blank" style="color:var(--neura);font-family:var(--f-mono);text-decoration:none;border-bottom:1px solid rgba(189,206,180,.35)">get.tech</a> to claim <span id="postDomain" style="font-family:var(--f-mono);color:var(--neura)">yourcompany.tech</span>, free for 10 years.
+        use <span style="font-family:var(--f-mono);color:var(--neura);letter-spacing:.1em">FOUNDERSTECH</span> at <a href="https://get.tech" target="_blank" style="color:var(--neura);font-family:var(--f-mono);text-decoration:none;border-bottom:1px solid rgba(189,206,180,.35)">get.tech</a> to claim <span id="postDomain" style="font-family:var(--f-mono);color:var(--neura)">yourcompany.tech</span>.
       </div>
 
       <div class="inv-foot">
@@ -1301,7 +1307,7 @@ canvas#sc { position: absolute; inset: 0; touch-action: none; border-radius: 6px
     const clean = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
     document.getElementById('invMsg').innerHTML =
       `we noticed <span style="font-family:var(--f-mono);color:var(--grey-matter);font-size:12px">${clean}</span>.
-      we think <strong>${display}</strong> deserves better — <strong>${slug}.tech</strong>, on us, for 10 years.`;
+      we think <strong>${display}</strong> deserves better — <strong>${slug}.tech</strong>.`;
   }
 
   // Only prefill form if not already submitted this session
@@ -1389,14 +1395,14 @@ function writeToSheet(data) {
   const postNote = document.getElementById('postReveal');
 
   // Show code immediately — sheet write is best-effort in background
-  if (postNote) postNote.innerHTML = `use <span style="color:var(--neura);font-family:var(--f-mono);letter-spacing:.1em">${data.code}</span> at <a href="https://get.tech" target="_blank" style="color:var(--neura);font-family:var(--f-mono);text-decoration:none;border-bottom:1px solid rgba(189,206,180,.35)">get.tech</a> to claim <span style="color:var(--neura);font-family:var(--f-mono)">${data.desired}.tech</span>, free for 10 years.`;
+  if (postNote) postNote.innerHTML = `use <span style="color:var(--neura);font-family:var(--f-mono);letter-spacing:.1em">${data.code}</span> at <a href="https://get.tech" target="_blank" style="color:var(--neura);font-family:var(--f-mono);text-decoration:none;border-bottom:1px solid rgba(189,206,180,.35)">get.tech</a> to claim <span style="color:var(--neura);font-family:var(--f-mono)">${data.desired}.tech</span>.`;
 
   if (!SHEETS_URL || SHEETS_URL === 'YOUR_APPS_SCRIPT_URL') {
     console.warn('.tech: Google Sheets URL not set — skipping write.');
     return;
   }
 
-  // Use Image ping — bypasses all CORS/redirect issues with Apps Script
+  // Use fetch no-cors — most reliable for Apps Script doGet
   const params = new URLSearchParams({
     timestamp: new Date().toISOString(),
     first:     data.first     || '',
@@ -1407,9 +1413,13 @@ function writeToSheet(data) {
     source:    window.location.href
   });
 
+  // Image ping — most reliable method for Apps Script doGet (no CORS issues)
   const img = new Image();
-  img.onload  = () => console.log('.tech: submission logged to sheet');
-  img.onerror = () => console.log('.tech: submission logged to sheet (onerror is normal for Apps Script)');
+  img.onload  = () => console.log('.tech: submission logged');
+  img.onerror = () => {
+    // Apps Script redirects return a non-image, triggering onerror — this is normal and expected
+    console.log('.tech: submission sent (onerror is expected behaviour for Apps Script)');
+  };
   img.src = SHEETS_URL + '?' + params.toString();
 }
 
