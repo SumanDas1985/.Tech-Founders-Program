@@ -1389,20 +1389,19 @@ function go() {
       Apps Script code provided separately → Save → Deploy
    3. Copy the deployment URL and paste it below.
 ──────────────────────────────────────────────────────── */
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw8fu3sZHCm2LO3YDWRXDqF_666NVs7PbXbAo3OEWWZ1FrQDExXMCiGYEcbeblPQM6aDA/exec';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzZoncMKv5Z_CZ1LN3vFRoeFtfu-53dzR171agyi7lrRItsNMW6bV_mgqG7SOpfVKjsxQ/exec';
 
 function writeToSheet(data) {
   const postNote = document.getElementById('postReveal');
 
-  // Show code immediately — sheet write is best-effort in background
+  // Show code immediately
   if (postNote) postNote.innerHTML = `use <span style="color:var(--neura);font-family:var(--f-mono);letter-spacing:.1em">${data.code}</span> at <a href="https://get.tech" target="_blank" style="color:var(--neura);font-family:var(--f-mono);text-decoration:none;border-bottom:1px solid rgba(189,206,180,.35)">get.tech</a> to claim <span style="color:var(--neura);font-family:var(--f-mono)">${data.desired}.tech</span>.`;
 
   if (!SHEETS_URL || SHEETS_URL === 'YOUR_APPS_SCRIPT_URL') {
-    console.warn('.tech: Google Sheets URL not set — skipping write.');
+    console.warn('.tech: SHEETS_URL not configured.');
     return;
   }
 
-  // Use fetch no-cors — most reliable for Apps Script doGet
   const params = new URLSearchParams({
     timestamp: new Date().toISOString(),
     first:     data.first     || '',
@@ -1413,14 +1412,18 @@ function writeToSheet(data) {
     source:    window.location.href
   });
 
-  // Image ping — most reliable method for Apps Script doGet (no CORS issues)
-  const img = new Image();
-  img.onload  = () => console.log('.tech: submission logged');
-  img.onerror = () => {
-    // Apps Script redirects return a non-image, triggering onerror — this is normal and expected
-    console.log('.tech: submission sent (onerror is expected behaviour for Apps Script)');
-  };
-  img.src = SHEETS_URL + '?' + params.toString();
+  const url = SHEETS_URL + '?' + params.toString();
+
+  // Primary: fetch with no-cors — fires the GET, Apps Script receives it
+  // no-cors means we cannot read the response, but the request DOES reach the server
+  fetch(url, { method: 'GET', mode: 'no-cors', cache: 'no-store' })
+    .then(() => console.log('.tech: sheet write fired (no-cors, response unreadable by design)'))
+    .catch(err => {
+      // Network failure — fall back to image ping
+      console.warn('.tech: fetch failed, trying image ping:', err);
+      const img = new Image();
+      img.src = url;
+    });
 }
 
 function closeModal() {
